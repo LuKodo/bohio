@@ -9,8 +9,8 @@ import { useState } from "react";
 
 export default function PropiedadesPage() {
   const [properties, setProperties] = useState<any[]>([])
-  const [page, setPage] = useState(1)
-  const [size, setSize] = useState(10)
+  const [page, _setPage] = useState(1)
+  const [size, _setSize] = useState(10)
 
   return (
     <div className="min-h-screen flex flex-col">

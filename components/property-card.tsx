@@ -5,21 +5,10 @@ import { Bath, BedDouble, Heart, MapPin, Ruler } from "lucide-react"
 import { Card, CardContent, CardFooter } from "@/components/ui/card"
 import { Button } from "@/components/ui/button"
 import { Badge } from "@/components/ui/badge"
+import { formatPrice } from "@/lib/utils"
 
 interface PropertyCardProps {
-  property: {
-    id: number
-    title: string
-    sale_value_from: number
-    rent_value_from: number
-    num_bedrooms: number
-    num_bathrooms: number
-    city: string
-    property_area: number
-    image: string
-    property_type: string
-    isNew: boolean
-  }
+  property: any
 }
 
 export function PropertyCard({ property }: PropertyCardProps) {
@@ -44,7 +33,7 @@ export function PropertyCard({ property }: PropertyCardProps) {
           <MapPin className="h-4 w-4 mr-1" />
           <span className="text-sm">{property.city}</span>
         </div>
-        <p className="font-bold text-xl">$ {property.sale_value_from === 0 ? property.rent_value_from : property.sale_value_from}</p>
+        <p className="font-bold text-xl">{property.sale_value_from === 0 ? formatPrice(property.rent_value_from) : formatPrice(property.sale_value_from)}</p>
         <div className="flex items-center justify-between mt-4 text-sm">
           <div className="flex items-center">
             <BedDouble className="h-4 w-4 mr-1" />

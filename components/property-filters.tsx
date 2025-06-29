@@ -74,7 +74,7 @@ export function PropertyFilters({ setProperties, page, size }: { setProperties: 
   const { data, error } = useSWR(`/api/properties?${params}`, fetcher)
 
   useEffect(() => {
-    if (data && data) {
+    if (data) {
       setProperties(data)
     } else {
       setProperties([])
@@ -232,10 +232,6 @@ export function PropertyFilters({ setProperties, page, size }: { setProperties: 
           <Button variant="outline" size="sm" onClick={() => openModal("parqueadero")}>
             <CircleParking className="h-4 w-4 mr-1" />
             Parqueadero
-          </Button>
-          <Button variant="outline" size="sm">
-            <SlidersHorizontal className="h-4 w-4 mr-1" />
-            Más filtros
           </Button>
         </div>
 

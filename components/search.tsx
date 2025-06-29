@@ -31,7 +31,7 @@ export function Search() {
                 <SelectItem value="lote">Lote</SelectItem>
               </SelectContent>
             </Select>
-            <Button className="bg-red-600 hover:bg-red-700">
+            <Button className="bg-red-600 hover:bg-red-700" onClick={() => window.location.href = '/propiedades'}>
               <SearchIcon className="h-4 w-4 mr-2" />
               Buscar
             </Button>
