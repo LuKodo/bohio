@@ -3,6 +3,7 @@ import { Search } from "@/components/search";
 import { PropertyList } from "@/components/property-list";
 import { Footer } from "@/components/footer";
 import useSWR from "swr";
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 export default function Home() {
   const fetchCitiesAndStates = (url: string) => fetch(url)
@@ -13,6 +14,7 @@ export default function Home() {
 
   return (
     <>
+      <SpeedInsights />
       <div className="min-h-screen flex flex-col">
         <Header />
         <main className="flex-1">
