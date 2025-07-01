@@ -13,10 +13,12 @@ export default async function handler(
   req: NextApiRequest,
   res: NextApiResponse,
 ) {
-  const { tipoInmueble, precioMin, precioMax, habitaciones, banos, areaMin, areaMax, parqueadero } = req.body;
+  const { tipoInmueble, precioMin, precioMax, habitaciones, banos, areaMin, areaMax, parqueadero, type_service, cityId } = req.body;
 
   let query = db("product_template")
 
+  if (type_service) query = query.where("type_service", type_service);
+  if (cityId) query = query.where("city_id", cityId);
   if (tipoInmueble) query = query.where("property_type", tipoInmueble);
   if (precioMin) query = query.where("sale_value_from", ">=", precioMin);
   if (precioMax) query = query.where("sale_value_from", "<=", precioMax);

@@ -73,7 +73,7 @@ export function Footer() {
             <ul className="space-y-2 text-sm">
               <li>
                 <Link href="#" className="text-muted-foreground hover:text-red-600">
-                  Bogotá
+                  Montería
                 </Link>
               </li>
               <li>
@@ -140,7 +140,7 @@ export function Footer() {
           </div>
         </div>
         <div className="border-t mt-8 pt-6 text-center text-sm text-muted-foreground">
-          <p>© {new Date().getFullYear()} FincaraĂ­z. Todos los derechos reservados.</p>
+          <p>© {new Date().getFullYear()} Bohio Consultores. Todos los derechos reservados. Desarrollado por © Lavisoft</p>
         </div>
       </div>
     </footer>

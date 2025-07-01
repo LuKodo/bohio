@@ -1,6 +1,6 @@
 'use client'
 
-import { Bath, BedDouble, CircleParking, Coins, DraftingCompass, Search, SlidersHorizontal, X } from "lucide-react"
+import { Bath, BedDouble, CircleParking, Coins, DraftingCompass, Search, X } from "lucide-react"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
@@ -11,7 +11,7 @@ import useSWR from "swr"
 
 type FilterKey = 'precio' | 'habitaciones' | 'banos' | 'area' | 'parqueadero'
 
-export function PropertyFilters({ setProperties, page, size }: { setProperties: Dispatch<SetStateAction<any[]>>, page: number, size: number }) {
+export function PropertyFilters({ setProperties, page, size, setLoading }: { setProperties: Dispatch<SetStateAction<any[]>>, page: number, size: number, setLoading: Dispatch<SetStateAction<boolean>> }) {
   const [filters, setFilters] = useState<Record<string, any>>(() => {
     if (typeof window !== "undefined") {
       const saved = localStorage.getItem("advancedFilters")
@@ -82,7 +82,11 @@ export function PropertyFilters({ setProperties, page, size }: { setProperties: 
   }, [data])
 
   if (error) return <div>Error al cargar propiedades</div>
-  if (!data) return <div>Cargando...</div>
+  if (!data)
+    return <div className="flex items-center justify-center h-64">
+      <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-blue-500"></div>
+      <span className="ml-2 text-gray-500">Cargando propiedades...</span>
+    </div>
 
   const renderModalContent = () => {
     switch (currentFilter) {

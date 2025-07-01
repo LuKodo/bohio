@@ -2,8 +2,15 @@ import { Header } from "@/components/header";
 import { Search } from "@/components/search";
 import { PropertyList } from "@/components/property-list";
 import { Footer } from "@/components/footer";
+import useSWR from "swr";
 
 export default function Home() {
+  const fetchCitiesAndStates = (url: string) => fetch(url)
+    .then(async (res) => {
+      return await res.json()
+    })
+  const { data: citiesAndStates } = useSWR('/api/cities-and-states', fetchCitiesAndStates)
+
   return (
     <>
       <div className="min-h-screen flex flex-col">
@@ -18,7 +25,7 @@ export default function Home() {
             <div className="container absolute inset-0 z-20 flex items-center justify-center">
               <div className="max-w-3xl w-full">
                 <h1 className="text-3xl md:text-4xl font-bold text-white mb-6 text-center">Encuentra tu hogar ideal</h1>
-                <Search />
+                <Search citiesAndStates={citiesAndStates} />
               </div>
             </div>
           </section>

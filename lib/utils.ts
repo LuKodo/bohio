@@ -13,6 +13,21 @@ export function formatPrice(price: number): string {
   }).format(price);
 }
 
+export const property_types = [
+  { value: 'house', label: 'Casa' },
+  { value: 'apartment', label: 'Apartamento' },
+  { value: 'blueprint', label: 'Plano' },
+  { value: 'lot', label: 'Lote' },
+  { value: 'bodega', label: 'Bodega' },
+  { value: 'office', label: 'Oficina' },
+  { value: 'finca', label: 'Finca' },
+  { value: 'hotel', label: 'Hotel' },
+  { value: 'cabin', label: 'Cabaña' },
+  { value: 'plot', label: 'Parcela' },
+  { value: 'studio', label: 'Estudio' },
+  { value: 'local', label: 'Local' },
+]
+
 export function definePropertyType(type: string): string {
   switch (type) {
     case 'house':

@@ -16,7 +16,7 @@ export function PropertyCard({ property }: PropertyCardProps) {
     <Card className="overflow-hidden">
       <div className="relative">
         <div className="aspect-[4/3] relative">
-          <Image src={property.image || "https://placehold.co/300x400"} alt={property.title} fill className="object-cover" />
+          <Image src={property.image || "https://placehold.co/300x400"} alt={property.city} fill className="object-cover" />
         </div>
         <Button variant="ghost" size="icon" className="absolute top-2 right-2 bg-white/80 hover:bg-white rounded-full">
           <Heart className="h-5 w-5" />
