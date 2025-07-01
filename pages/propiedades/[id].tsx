@@ -49,8 +49,8 @@ export default function PropiedadesPage() {
         <div className="min-h-screen flex flex-col">
             <Header />
             <main className="flex-1 bg-gray-50">
-                <div className="container py-6 px-24">
-                    <div className="block max-w-[70%]">
+                <div className="container py-6 md:px-24 px-6">
+                    <div className="block md:max-w-[70%] sm:max-w-[100%] mx-auto">
                         <div className="flex justify-between items-center mb-6 flex-wrap">
                             <div>
                                 <div>
@@ -86,8 +86,8 @@ export default function PropiedadesPage() {
                                 <img src="https://cdn2.infocasas.com.uy/repo/img/th.outside1527x221.685d5039b36f5_infocdn__a7c6d45a-f4e1-476e-ad0b-c9af9946afe6.jpeg" alt={data?.title} className="w-full h-[400px] rounded-lg mb-4" />
                             </div>
 
-                            <div className="flex justify-between items-center mb-4">
-                                <div className="flex gap-4 overflow-x-auto">
+                            <div className="flex sm:flex-row md:justify-between sm:justify-start items-center mb-4">
+                                <div className="flex gap-4 overflow-x-auto sm:flex-row flex-col sm:w-50 md:w-full">
                                     <div className="p-2 bg-gray-200 rounded-lg flex items-center justify-center">
                                         <BedDouble className="text-2xl" />
                                         <span className="ml-2">{data?.num_bedrooms || 0} Habs.</span>
@@ -101,22 +101,26 @@ export default function PropiedadesPage() {
                                         <span className="ml-2">{Number(data?.property_area) || 0} m²</span>
                                     </div>
                                 </div>
-                                <div className="text-right">
-                                    <p className="text-2xl font-bold">
-                                        {data?.sale_value_from > 0 && `${formatPrice(data.sale_value_from)}`}
-                                    </p>
-                                    <p className="text-sm text-muted-foreground">
-                                        {(data?.type_service === 'sale' || data?.type_service === 'sale_rent') && 'Precio de venta'}
-                                    </p>
-                                </div>
-                                <div className="text-right">
-                                    <p className="text-2xl font-bold">
-                                        {data?.rent_value_from > 0 && ` ${formatPrice(data.rent_value_from)}`}
-                                    </p>
-                                    <p className="text-sm text-muted-foreground">
-                                        {(data?.type_service === 'rent' || data?.type_service === 'sale_rent') && 'Precio de arriendo'}
-                                    </p>
-                                </div>
+                                {data?.type_service === 'sale' &&
+                                    <div className="w-full text-right">
+                                        <p className="text-2xl font-bold">
+                                            {data?.sale_value_from > 0 && `${formatPrice(data.sale_value_from)}`}
+                                        </p>
+                                        <p className="text-sm text-muted-foreground">
+                                            {(data?.type_service === 'sale' || data?.type_service === 'sale_rent') && 'Precio de venta'}
+                                        </p>
+                                    </div>
+                                }
+                                {data?.type_service === 'rent' &&
+                                    <div className="w-full text-right">
+                                        <p className="text-2xl font-bold">
+                                            {data?.rent_value_from > 0 && ` ${formatPrice(data.rent_value_from)}`}
+                                        </p>
+                                        <p className="text-sm text-muted-foreground">
+                                            {(data?.type_service === 'rent' || data?.type_service === 'sale_rent') && 'Precio de arriendo'}
+                                        </p>
+                                    </div>
+                                }
                             </div>
                         </div>
 

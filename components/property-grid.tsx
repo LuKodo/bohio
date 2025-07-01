@@ -1,15 +1,11 @@
 import { PropertyCard } from "@/components/property-card"
 
-export function PropertyGrid({ properties, loading }: { properties: any[], loading: boolean }) {
+export function PropertyGrid({ properties }: { properties: any[] }) {
   return (
     <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-      {loading ? (
-        <div>Cargando propiedades...</div>
-      ) : (
-        properties.map((property) => (
-          <PropertyCard key={property.id} property={property} />
-        ))
-      )}
+      {properties.map((property) => (
+        <PropertyCard key={property.id} property={property} />
+      ))}
     </div>
   )
 }

@@ -4,23 +4,56 @@ import { Footer } from "@/components/footer";
 import { Header } from "@/components/header";
 import { PropertyFilters } from "@/components/property-filters";
 import { PropertyGrid } from "@/components/property-grid";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import { useSearchParams } from "next/navigation";
 import useSWR from "swr";
 
 
 export default function PropiedadesPage() {
-  const [properties, setProperties] = useState<any[]>([])
-  const [loading, setLoading] = useState(false)
   const [page, _setPage] = useState(1)
   const [size, _setSize] = useState(10)
   const searchParams = useSearchParams()
+
   const type_service = searchParams.get("type_service") || ""
+
+  const [filters, setFilters] = useState<Record<string, any>>(() => {
+    if (typeof window !== "undefined") {
+      const saved = localStorage.getItem("advancedFilters")
+      return saved ? JSON.parse(saved) : {}
+    }
+    return {}
+  })
+
+  const fetcher = (url: string) => fetch(url, {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({
+      ...filters,
+      page,
+      size,
+    }),
+  }).then(async (res) => {
+    return await res.json()
+  })
+
+  const params = new URLSearchParams()
+
+  Object.entries(filters).forEach(([key, value]) => {
+    if (value !== undefined && value !== null) {
+      params.append(key, value.toString())
+    }
+  })
+
+  const { data, error } = useSWR(`/api/properties?${params}`, fetcher)
+
+  if (error) return <div>Error fetching properties</div>
 
   return (
     <div className="min-h-screen flex flex-col">
       <Header />
-      <PropertyFilters setProperties={setProperties} setLoading={setLoading} page={page} size={size} />
+      <PropertyFilters filters={filters} setFilters={setFilters} />
       <main className="flex-1 bg-gray-50">
         <div className="container py-6 px-12">
           <div className="flex justify-between items-center mb-6">
@@ -28,18 +61,13 @@ export default function PropiedadesPage() {
               <h1 className="text-2xl font-bold">Propiedades en {type_service === 'rent' ? 'Arriendo' : type_service === 'sale' ? 'Venta' : 'Venta/Arriendo'}</h1>
               <p className="text-muted-foreground"> resultados encontrados</p>
             </div>
-            <div className="flex items-center gap-4">
-              <span className="text-sm text-muted-foreground">Ordenar por:</span>
-              <select className="border rounded-md px-3 py-1 text-sm">
-                <option>Más relevantes</option>
-                <option>Precio: menor a mayor</option>
-                <option>Precio: mayor a menor</option>
-                <option>Más recientes</option>
-                <option>Área: mayor a menor</option>
-              </select>
-            </div>
           </div>
-          <PropertyGrid properties={properties} loading={loading} />
+          {(!data) ? (<div className="flex items-center justify-center h-64">
+            <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-blue-500"></div>
+            <span className="ml-2 text-gray-500">Cargando propiedades...</span>
+          </div>) : (
+            <PropertyGrid properties={data} />
+          )}
         </div>
       </main>
       <Footer />

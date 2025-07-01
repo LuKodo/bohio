@@ -6,33 +6,14 @@ import { Input } from "@/components/ui/input"
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
 import { Badge } from "@/components/ui/badge"
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog"
-import { Dispatch, SetStateAction, useEffect, useState } from "react"
-import useSWR from "swr"
+import { useEffect, useState } from "react"
 
 type FilterKey = 'precio' | 'habitaciones' | 'banos' | 'area' | 'parqueadero'
 
-export function PropertyFilters({ setProperties, page, size, setLoading }: { setProperties: Dispatch<SetStateAction<any[]>>, page: number, size: number, setLoading: Dispatch<SetStateAction<boolean>> }) {
-  const [filters, setFilters] = useState<Record<string, any>>(() => {
-    if (typeof window !== "undefined") {
-      const saved = localStorage.getItem("advancedFilters")
-      return saved ? JSON.parse(saved) : {}
-    }
-    return {}
-  })
 
+export function PropertyFilters({ filters, setFilters }: { filters: Record<string, any>, setFilters: (filters: Record<string, any>) => void }) {
   const [isModalOpen, setIsModalOpen] = useState(false)
   const [currentFilter, setCurrentFilter] = useState<FilterKey | null>(null)
-
-  useEffect(() => {
-    localStorage.setItem("advancedFilters", JSON.stringify(filters))
-  }, [filters])
-
-  const openModal = (filterType: FilterKey) => {
-    setCurrentFilter(filterType)
-    setIsModalOpen(true)
-  }
-
-  const closeModal = () => setIsModalOpen(false)
 
   const updateFilter = (key: string, value: any) => {
     setFilters((prev: any) => ({
@@ -47,46 +28,18 @@ export function PropertyFilters({ setProperties, page, size, setLoading }: { set
     setFilters(newFilters)
   }
 
-  const clearAllFilters = () => setFilters({})
-
-  const fetcher = (url: string) => fetch(url, {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({
-      ...filters,
-      page,
-      size,
-    }),
-  }).then(async (res) => {
-    return await res.json()
-  })
-
-  const params = new URLSearchParams()
-
-  Object.entries(filters).forEach(([key, value]) => {
-    if (value !== undefined && value !== null) {
-      params.append(key, value.toString())
-    }
-  })
-
-  const { data, error } = useSWR(`/api/properties?${params}`, fetcher)
+  const openModal = (filterType: FilterKey) => {
+    setCurrentFilter(filterType)
+    setIsModalOpen(true)
+  }
 
   useEffect(() => {
-    if (data) {
-      setProperties(data)
-    } else {
-      setProperties([])
-    }
-  }, [data])
+    localStorage.setItem("advancedFilters", JSON.stringify(filters))
+  }, [filters])
 
-  if (error) return <div>Error al cargar propiedades</div>
-  if (!data)
-    return <div className="flex items-center justify-center h-64">
-      <div className="animate-spin rounded-full h-8 w-8 border-t-2 border-blue-500"></div>
-      <span className="ml-2 text-gray-500">Cargando propiedades...</span>
-    </div>
+  const closeModal = () => setIsModalOpen(false)
+
+  const clearAllFilters = () => setFilters({})
 
   const renderModalContent = () => {
     switch (currentFilter) {

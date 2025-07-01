@@ -70,7 +70,7 @@ export function Search({ citiesAndStates }: SearchProps) {
   const [value, setValue] = useState("")
 
   return (
-    <div className="bg-white rounded-lg shadow-lg p-4">
+    <div className="bg-white rounded-lg shadow-lg p-4 m-4">
       <Tabs defaultValue="comprar">
         <TabsList className="grid grid-cols-2 mb-4 w-full max-w-3xl mx-auto">
           <TabsTrigger value="comprar">Comprar</TabsTrigger>
