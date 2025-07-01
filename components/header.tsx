@@ -1,8 +1,9 @@
 import Link from "next/link"
-import { Building2, Heart, Menu, User } from "lucide-react"
+import { Heart, Menu, User } from "lucide-react"
 
 import { Button } from "@/components/ui/button"
 import { useState } from "react"
+import Image from "next/image"
 
 export function Header() {
   const [filters, setFilters] = useState<Record<string, any>>(() => {
@@ -27,7 +28,7 @@ export function Header() {
       <div className="container flex h-16 items-center justify-between">
         <div className="flex items-center gap-6">
           <Link href="/" className="flex items-center gap-2">
-            <Building2 className="h-6 w-6 text-red-600" />
+            <Image src="/logo.png" width={30} height={30} alt="Logo" />
             <span className="text-xl font-bold text-red-600">Bohio Consultores</span>
           </Link>
           <nav className="hidden md:flex gap-6">

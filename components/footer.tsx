@@ -1,5 +1,6 @@
 import Link from "next/link"
-import { Building2, Facebook, Instagram, Twitter, Youtube } from "lucide-react"
+import { Facebook, Instagram, Twitter, Youtube } from "lucide-react"
+import Image from "next/image"
 
 export function Footer() {
   return (
@@ -8,7 +9,7 @@ export function Footer() {
         <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           <div>
             <Link href="/" className="flex items-center gap-2 mb-4">
-              <Building2 className="h-6 w-6 text-red-600" />
+              <Image src="/logo.png" width={30} height={30} alt="Logo" />
               <span className="text-xl font-bold text-red-600">Bohio Consultores</span>
             </Link>
             <p className="text-sm text-muted-foreground mb-4">
